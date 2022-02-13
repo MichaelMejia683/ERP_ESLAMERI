@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane id="AnchorPane" prefHeight="554.0" prefWidth="793.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controlador.NominaxEmpleadoViewController">
+   <children>
+      <VBox prefHeight="554.0" prefWidth="793.0" />
+      <Pane fx:id="pnlOverview" layoutX="10.0" layoutY="10.0" prefHeight="554.0" prefWidth="793.0" style="-fx-background-color: FFFFFF;">
+         <children>
+            <TextField id="filtro" fx:id="filtro" layoutX="593.0" layoutY="177.0" onAction="#handlerAction" prefHeight="27.0" prefWidth="183.0" promptText="Buscar" style="-fx-background-color: #FFFFFF; -fx-border-color: #B7C3D7; -fx-border-radius: 2em;" />
+            <ScrollPane layoutX="322.0" layoutY="210.0" prefHeight="330.0" prefWidth="460.0" stylesheets="@style.css">
+               <content>
+                  <VBox fx:id="pnItems" prefHeight="326.0" prefWidth="458.0" spacing="5.0" style="-fx-background-color: #D3D3D3;">
+                     <padding>
+                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                     </padding>
+                     <children>
+                        <TableView id="tableNXE" fx:id="tableNXE" onMouseClicked="#CargarNXE" onSort="#handlerAction" prefHeight="327.0" prefWidth="365.0">
+                           <columns>
+                              <TableColumn id="ID" fx:id="ID" onEditStart="#handlerAction" prefWidth="46.0" text="ID" />
+                              <TableColumn id="clmEmp" fx:id="clmEmp" minWidth="0.0" onEditStart="#handlerAction" prefWidth="115.0" text="Empleado" />
+                              <TableColumn id="clmDiur" fx:id="clmDiur" minWidth="0.0" onEditStart="#handlerAction" prefWidth="115.0" text="Extra Diurna" />
+                              <TableColumn id="clmNoc" fx:id="clmNoc" minWidth="0.0" onEditStart="#handlerAction" prefWidth="115.0" text="Extra Noct" />
+                              <TableColumn id="clmDom" fx:id="clmDom" minWidth="0.0" onEditStart="#handlerAction" prefWidth="115.0" text="Dominical" />
+                              <TableColumn id="clmRecar" fx:id="clmRecar" minWidth="0.0" onEditStart="#handlerAction" prefWidth="115.0" text="Recargo Nocturno" />
+                              <TableColumn id="clmDesc" fx:id="clmDesc" minWidth="0.0" onEditStart="#handlerAction" prefWidth="115.0" text="Descuentos" />
+                              <TableColumn id="clmSalario" fx:id="clmSalario" minWidth="0.0" onEditStart="#handlerAction" prefWidth="138.0" text="Salario Total" />
+                              <TableColumn id="clmCorte" fx:id="clmCorte" minWidth="0.0" onEditStart="#handlerAction" prefWidth="148.0" text="Corte" />
+                           </columns>
+                        </TableView>
+                     </children>
+                  </VBox>
+               </content>
+            </ScrollPane>
+            <ImageView id="btnBuscar" fx:id="btnBuscar" fitHeight="17.0" fitWidth="16.0" layoutX="751.0" layoutY="183.0" onDragDetected="#handlerAction" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../Recursos/icons8_Search_52px.png" />
+               </image>
+            </ImageView>
+            <TextField id="fieldID" fx:id="fieldID" layoutX="19.0" layoutY="52.0" onAction="#handlerAction" />
+            <Text layoutX="19.0" layoutY="37.0" strokeType="OUTSIDE" strokeWidth="0.0" text="ID" />
+            <Text layoutX="191.0" layoutY="37.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Empleado" />
+            <Button id="btnCrear" fx:id="btnCrear" layoutX="651.0" layoutY="52.0" mnemonicParsing="false" onAction="#handlerAction" prefHeight="25.0" prefWidth="66.0" text="Crear" />
+            <Button id="btnModifi" fx:id="btnModifi" layoutX="651.0" layoutY="91.0" mnemonicParsing="false" onAction="#handlerAction" text="Modificar" />
+            <Button id="btnBorrar" fx:id="btnBorrar" layoutX="652.0" layoutY="134.0" mnemonicParsing="false" onAction="#handlerAction" prefHeight="25.0" prefWidth="66.0" text="Eliminar" />
+            <Button id="btnNuevo" fx:id="btnNuevo" layoutX="652.0" layoutY="12.0" mnemonicParsing="false" onAction="#handlerAction" prefHeight="25.0" prefWidth="66.0" text="Nuevo" />
+            <Pane layoutX="14.0" layoutY="91.0" prefHeight="450.0" prefWidth="295.0">
+               <children>
+                  <TabPane prefHeight="451.0" prefWidth="295.0" tabClosingPolicy="UNAVAILABLE">
+                     <tabs>
+                        <Tab text="Novedades">
+                           <content>
+                              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="405.0" prefWidth="378.0">
+                                 <children>
+                                    <ScrollPane prefHeight="424.0" prefWidth="295.0">
+                                       <content>
+                                          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="409.0" prefWidth="296.0">
+                                             <children>
+                                                <Text layoutX="15.0" layoutY="57.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Salario Base" />
+                                                <Text layoutX="17.0" layoutY="115.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Horas Extra Diurnas" wrappingWidth="243.380859375" />
+                                                <Text layoutX="17.0" layoutY="301.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Recargos Nocturnos" wrappingWidth="351.19140625" />
+                                                <Text layoutX="20.0" layoutY="358.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Descuentos" />
+                                                <TextField id="fieldSalario" fx:id="fieldSalario" layoutX="15.0" layoutY="70.0" onAction="#handlerAction" prefHeight="25.0" prefWidth="245.0" />
+                                                <TextField id="fieldExtraDi" fx:id="fieldExtraDi" layoutX="16.0" layoutY="128.0" onAction="#handlerAction" prefHeight="25.0" prefWidth="246.0" />
+                                                <TextField id="fieldRecargo" fx:id="fieldRecargo" layoutX="14.0" layoutY="312.0" onAction="#handlerAction" prefHeight="25.0" prefWidth="245.0" />
+                                                <Text layoutX="14.0" layoutY="13.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Coloque el número de horas realizadas en cada concepto" wrappingWidth="253.322265625" />
+                                                <TextField id="fieldDesc" fx:id="fieldDesc" layoutX="16.0" layoutY="376.0" onAction="#handlerAction" prefHeight="25.0" prefWidth="247.0" />
+                                                <Text layoutX="19.0" layoutY="176.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Horas Extra Nocturnas" />
+                                                <Text layoutX="20.0" layoutY="239.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Horas Dominicales" />
+                                                <TextField id="fieldExtraNo" fx:id="fieldExtraNo" layoutX="17.0" layoutY="189.0" onAction="#handlerAction" prefHeight="25.0" prefWidth="245.0" />
+                                                <TextField id="fieldDomi" fx:id="fieldDomi" layoutX="18.0" layoutY="250.0" onAction="#handlerAction" prefHeight="25.0" prefWidth="244.0" />
+                                             </children>
+                                          </AnchorPane>
+                                       </content>
+                                    </ScrollPane>
+                                 </children>
+                              </AnchorPane>
+                           </content>
+                        </Tab>
+                        <Tab text="Salario">
+                           <content>
+                              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                 <children>
+                                    <Text layoutX="14.0" layoutY="44.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Calcular Salario Total" />
+                                    <Text layoutX="19.0" layoutY="127.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Fecha de corte" />
+                                    <TextField id="fieldSTotal" fx:id="fieldSTotal" layoutX="14.0" layoutY="57.0" onAction="#handlerAction" />
+                                    <DatePicker id="fieldCorte" fx:id="fieldCorte" layoutX="10.0" layoutY="138.0" onAction="#handlerAction" />
+                                    <Button id="btnCalcular" fx:id="btnCalcular" layoutX="193.0" layoutY="57.0" mnemonicParsing="false" onAction="#handlerAction" text="Calcular" />
+                                 </children>
+                              </AnchorPane>
+                           </content>
+                        </Tab>
+                     </tabs>
+                  </TabPane>
+               </children>
+            </Pane>
+            <ComboBox id="cbxEmp" fx:id="cbxEmp" layoutX="191.0" layoutY="52.0" onAction="#handlerAction" prefWidth="150.0" promptText="Seleccionar..." />
+            <Button id="btnVolante" fx:id="btnVolante" layoutX="395.0" layoutY="91.0" mnemonicParsing="false" onAction="#handlerAction" text="Volante de Pago" />
+            <TextField id="fieldNameEmp" fx:id="fieldNameEmp" layoutX="373.0" layoutY="52.0" onAction="#handlerAction" />
+         </children>
+      </Pane>
+   </children>
+</AnchorPane>

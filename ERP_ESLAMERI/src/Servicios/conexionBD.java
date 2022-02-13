@@ -5,7 +5,7 @@ import org.apache.commons.dbcp.BasicDataSource;
 
 /**
  *
- * @author jorgeluis
+ * @author Michael
  */
 
 public class conexionBD {
