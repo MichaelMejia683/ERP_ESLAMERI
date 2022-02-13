@@ -5,57 +5,60 @@
  */
 package Modelo;
 
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
+
 /**
  *
  * @author MAICOL MEJA
  */
 public class Cliente {
     
-    private String idCliente;
-    private String nombre;
-    private String telefono;
-    private String direccion;
+    private StringProperty idCliente;
+    private StringProperty nombre;
+    private StringProperty telefono;
+    private StringProperty direccion;
 
     public Cliente() {
     }
 
     public Cliente(String idCliente, String nombre, String telefono, String direccion) {
-        this.idCliente = idCliente;
-        this.nombre = nombre;
-        this.telefono = telefono;
-        this.direccion = direccion;
+        this.idCliente = new SimpleStringProperty(idCliente);
+        this.nombre = new SimpleStringProperty(nombre);
+        this.telefono = new SimpleStringProperty(telefono);
+        this.direccion = new SimpleStringProperty(direccion);
     }
 
     public String getIdCliente() {
-        return idCliente;
+        return idCliente.get();
     }
 
     public void setIdCliente(String idCliente) {
-        this.idCliente = idCliente;
+        this.idCliente = new SimpleStringProperty(idCliente);
     }
 
     public String getNombre() {
-        return nombre;
+        return nombre.get();
     }
 
     public void setNombre(String nombre) {
-        this.nombre = nombre;
+        this.nombre = new SimpleStringProperty(nombre);
     }
 
     public String getTelefono() {
-        return telefono;
+        return telefono.get();
     }
 
     public void setTelefono(String telefono) {
-        this.telefono = telefono;
+        this.telefono = new SimpleStringProperty(telefono);
     }
 
     public String getDireccion() {
-        return direccion;
+        return direccion.get();
     }
 
     public void setDireccion(String direccion) {
-        this.direccion = direccion;
+        this.direccion = new SimpleStringProperty(direccion);
     }
     
     

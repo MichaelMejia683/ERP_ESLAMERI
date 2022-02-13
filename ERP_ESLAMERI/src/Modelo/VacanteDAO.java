@@ -11,6 +11,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import javafx.collections.ObservableList;
 import javax.swing.JOptionPane;
 
 /**
@@ -119,8 +120,7 @@ public class VacanteDAO {
         return rtdo;
     }
     
-    public ArrayList<Vacante> listadoVacante(String id){      
-        ArrayList<Vacante> listado = new ArrayList<>();
+    public void listadoVacante(String id, ObservableList<Vacante> listado){      
         try{
             con = conexion.dataSource.getConnection();
             String sql;
@@ -138,17 +138,16 @@ public class VacanteDAO {
             
             rs = pstm.executeQuery();
                         
-            Vacante vacan = null;
             while(rs.next()){
-                vacan = new Vacante();
-                vacan.setIdVacante(rs.getString("idVacante"));
-                vacan.setIdUsuario(rs.getString("idUsuario"));
-                vacan.setCargo(rs.getString("cargo"));
-                vacan.setExperiencia(rs.getString("experiencia"));
-                vacan.setEstadoTiempo(rs.getString("estadoTiempo"));
-                vacan.setDescripcionHabilidad(rs.getString("descripcionHabilidades"));
-                vacan.setEstado(rs.getString("estado"));
-                listado.add(vacan);
+                listado.add( new Vacante(
+                rs.getString("idVacante"),
+                rs.getString("idUsuario"),
+                rs.getString("cargo"),
+                rs.getString("experiencia"),
+                rs.getString("estadoTiempo"),
+                rs.getString("descripcionHabilidades"),
+                rs.getString("estado")
+                ));
             }
         }
         catch(SQLException ex){
@@ -165,7 +164,6 @@ public class VacanteDAO {
                         ex.getErrorCode() + "\nError en generar listado de VACANTE : " + ex.getMessage());
             }
         }
-        return listado;
     }
     
 }

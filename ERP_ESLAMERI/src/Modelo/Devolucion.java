@@ -5,47 +5,50 @@
  */
 package Modelo;
 
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
+
 /**
  *
  * @author MAICOL MEJA
  */
 public class Devolucion {
     
-    private String idDevolucion;
-    private String idEntrada;
-    private String Comentario;
+    private StringProperty idDevolucion;
+    private StringProperty idEntrada;
+    private StringProperty Comentario;
 
     public Devolucion() {
     }
 
     public Devolucion(String idDevolucion, String idEntrada, String Comentario) {
-        this.idDevolucion = idDevolucion;
-        this.idEntrada = idEntrada;
-        this.Comentario = Comentario;
+        this.idDevolucion = new SimpleStringProperty(idDevolucion);
+        this.idEntrada = new SimpleStringProperty(idEntrada);
+        this.Comentario = new SimpleStringProperty(Comentario);
     }
 
     public String getIdDevolucion() {
-        return idDevolucion;
+        return idDevolucion.get();
     }
 
     public void setIdDevolucion(String idDevolucion) {
-        this.idDevolucion = idDevolucion;
+        this.idDevolucion = new SimpleStringProperty(idDevolucion);
     }
 
     public String getIdEntrada() {
-        return idEntrada;
+        return idEntrada.get();
     }
 
     public void setIdEntrada(String idEntrada) {
-        this.idEntrada = idEntrada;
+        this.idEntrada = new SimpleStringProperty(idEntrada);
     }
 
     public String getComentario() {
-        return Comentario;
+        return Comentario.get();
     }
 
     public void setComentario(String Comentario) {
-        this.Comentario = Comentario;
+        this.Comentario = new SimpleStringProperty(Comentario);
     }
     
     

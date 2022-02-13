@@ -5,67 +5,70 @@
  */
 package Modelo;
 
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
+
 /**
  *
  * @author MAICOL MEJA
  */
 public class FacturaCobro {
     
-    private String idFC;
-    private String idOS;
-    private String costoTotal;
-    private String fechaVencimiento;
-    private String estado;
+    private StringProperty idFC;
+    private StringProperty idOS;
+    private StringProperty costoTotal;
+    private StringProperty fechaVencimiento;
+    private StringProperty estado;
 
     public FacturaCobro() {
     }
 
     public FacturaCobro(String idFC, String idOS, String costoTotal, String fechaVencimiento, String estado) {
-        this.idFC = idFC;
-        this.idOS = idOS;
-        this.costoTotal = costoTotal;
-        this.fechaVencimiento = fechaVencimiento;
-        this.estado = estado;
+        this.idFC = new SimpleStringProperty(idFC);
+        this.idOS = new SimpleStringProperty(idOS);
+        this.costoTotal = new SimpleStringProperty(costoTotal);
+        this.fechaVencimiento = new SimpleStringProperty(fechaVencimiento);
+        this.estado = new SimpleStringProperty(estado);
     }
 
     public String getIdFC() {
-        return idFC;
+        return idFC.get();
     }
 
     public void setIdFC(String idFC) {
-        this.idFC = idFC;
+        this.idFC = new SimpleStringProperty(idFC);
     }
 
     public String getIdOS() {
-        return idOS;
+        return idOS.get();
     }
 
     public void setIdOS(String idOS) {
-        this.idOS = idOS;
+        this.idOS = new SimpleStringProperty(idOS);
     }
 
     public String getCostoTotal() {
-        return costoTotal;
+        return costoTotal.get();
     }
 
     public void setCostoTotal(String costoTotal) {
-        this.costoTotal = costoTotal;
+        this.costoTotal = new SimpleStringProperty(costoTotal);
     }
 
     public String getFechaVencimiento() {
-        return fechaVencimiento;
+        return fechaVencimiento.get();
     }
 
     public void setFechaVencimiento(String fechaVencimiento) {
-        this.fechaVencimiento = fechaVencimiento;
+        this.fechaVencimiento = new SimpleStringProperty(fechaVencimiento);
     }
 
     public String getEstado() {
-        return estado;
+        return estado.get();
     }
 
     public void setEstado(String estado) {
-        this.estado = estado;
+        this.estado = new SimpleStringProperty(estado);
     }
     
     

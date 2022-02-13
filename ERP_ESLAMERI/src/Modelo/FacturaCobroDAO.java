@@ -11,6 +11,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import javafx.collections.ObservableList;
 import javax.swing.JOptionPane;
 
 /**
@@ -115,8 +116,7 @@ public class FacturaCobroDAO {
         return rtdo;
     }
     
-    public ArrayList<FacturaCobro> listadoFacturaCobro(String id){      
-        ArrayList<FacturaCobro> listado = new ArrayList<>();
+    public void listadoFacturaCobro(String id, ObservableList<FacturaCobro> listado){      
         try{
             con = conexion.dataSource.getConnection();
             String sql;
@@ -134,15 +134,14 @@ public class FacturaCobroDAO {
             
             rs = pstm.executeQuery();
                         
-            FacturaCobro factura = null;
             while(rs.next()){
-                factura = new FacturaCobro();
-                factura.setIdFC(rs.getString("idFC"));
-                factura.setIdOS(rs.getString("idOS"));
-                factura.setCostoTotal(rs.getString("costoTotal"));
-                factura.setFechaVencimiento(rs.getString("fechaVencimiento"));
-                factura.setEstado(rs.getString("estado"));
-                listado.add(factura);
+                listado.add( new FacturaCobro(
+                rs.getString("idFC"),
+                rs.getString("idOS"),
+                rs.getString("costoTotal"),
+                rs.getString("fechaVencimiento"),
+                rs.getString("estado")
+                ));
             }
         }
         catch(SQLException ex){
@@ -159,7 +158,6 @@ public class FacturaCobroDAO {
                         ex.getErrorCode() + "\nError en generar listado de FACTURA COBRO : " + ex.getMessage());
             }
         }
-        return listado;
     }
     
 }

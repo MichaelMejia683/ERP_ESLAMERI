@@ -11,6 +11,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import javafx.collections.ObservableList;
 import javax.swing.JOptionPane;
 
 /**
@@ -117,8 +118,7 @@ public class Solicitud_InternaDAO {
         return rtdo;
     }
     
-    public ArrayList<Solicitud_Interna> listadoSolicitud_Interna(String id){      
-        ArrayList<Solicitud_Interna> listado = new ArrayList<>();
+    public void listadoSolicitud_Interna(String id, ObservableList<Solicitud_Interna> listado){      
         try{
             con = conexion.dataSource.getConnection();
             String sql;
@@ -136,16 +136,15 @@ public class Solicitud_InternaDAO {
             
             rs = pstm.executeQuery();
                         
-            Solicitud_Interna SI = null;
             while(rs.next()){
-                SI = new Solicitud_Interna();
-                SI.setIdSI(rs.getString("idSI"));
-                SI.setIdUsuario(rs.getString("idUsuario"));
-                SI.setSolicitud(rs.getString("solicitud"));
-                SI.setJusti_Solicitud(rs.getString("justi_Solicitud"));
-                SI.setTiempo_Espera(rs.getString("tiempo_Espera"));
-                SI.setEstado(rs.getString("estado"));
-                listado.add(SI);
+                listado.add( new Solicitud_Interna(
+                rs.getString("idSI"),
+                rs.getString("idUsuario"),
+                rs.getString("solicitud"),
+                rs.getString("justi_Solicitud"),
+                rs.getString("tiempo_Espera"),
+                rs.getString("estado")
+                ));
             }
         }
         catch(SQLException ex){
@@ -162,7 +161,6 @@ public class Solicitud_InternaDAO {
                         ex.getErrorCode() + "\nError en generar listado de SOLICITUD INTERNA : " + ex.getMessage());
             }
         }
-        return listado;
     }
     
 }

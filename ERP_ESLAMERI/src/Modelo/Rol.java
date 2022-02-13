@@ -5,47 +5,50 @@
  */
 package Modelo;
 
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
+
 /**
  *
  * @author MICHAEL
  */
 public class Rol {
     
-    private String idRol;
-    private String nombre;
-    private String permisos;
+    private StringProperty idRol;
+    private StringProperty nombre;
+    private StringProperty permisos;
 
     public Rol() {
     }
 
     public Rol(String idRol, String nombre, String permisos) {
-        this.idRol = idRol;
-        this.nombre = nombre;
-        this.permisos = permisos;
+        this.idRol = new SimpleStringProperty(idRol);
+        this.nombre = new SimpleStringProperty(nombre);
+        this.permisos = new SimpleStringProperty(permisos);
     }
 
     public String getIdRol() {
-        return idRol;
+        return idRol.get();
     }
 
     public void setIdRol(String idRol) {
-        this.idRol = idRol;
+        this.idRol = new SimpleStringProperty(idRol);
     }
 
     public String getNombre() {
-        return nombre;
+        return nombre.get();
     }
 
     public void setNombre(String nombre) {
-        this.nombre = nombre;
+        this.nombre = new SimpleStringProperty(nombre);
     }
 
     public String getPermisos() {
-        return permisos;
+        return permisos.get();
     }
 
     public void setPermisos(String permisos) {
-        this.permisos = permisos;
+        this.permisos = new SimpleStringProperty(permisos);
     }
     
     

@@ -5,67 +5,70 @@
  */
 package Modelo;
 
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
+
 /**
  *
  * @author MICHAEL
  */
 public class Servicio {
     
-    private String idServicio;
-    private String nombre;
-    private String tarifa;
-    private String tiempoEstimado;
-    private String tipoTiempo;
+    private StringProperty idServicio;
+    private StringProperty nombre;
+    private StringProperty tarifa;
+    private StringProperty tiempoEstimado;
+    private StringProperty tipoTiempo;
 
     public Servicio() {
     }
 
     public Servicio(String idServicio, String nombre, String tarifa, String tiempoEstimado, String tipoTiempo) {
-        this.idServicio = idServicio;
-        this.nombre = nombre;
-        this.tarifa = tarifa;
-        this.tiempoEstimado = tiempoEstimado;
-        this.tipoTiempo = tipoTiempo;
+        this.idServicio = new SimpleStringProperty(idServicio);
+        this.nombre = new SimpleStringProperty(nombre);
+        this.tarifa = new SimpleStringProperty(tarifa);
+        this.tiempoEstimado = new SimpleStringProperty(tiempoEstimado);
+        this.tipoTiempo = new SimpleStringProperty(tipoTiempo);
     }
 
     public String getIdServicio() {
-        return idServicio;
+        return idServicio.get();
     }
 
     public void setIdServicio(String idServicio) {
-        this.idServicio = idServicio;
+        this.idServicio = new SimpleStringProperty(idServicio);
     }
 
     public String getNombre() {
-        return nombre;
+        return nombre.get();
     }
 
     public void setNombre(String nombre) {
-        this.nombre = nombre;
+        this.nombre = new SimpleStringProperty(nombre);
     }
 
     public String getTarifa() {
-        return tarifa;
+        return tarifa.get();
     }
 
     public void setTarifa(String tarifa) {
-        this.tarifa = tarifa;
+        this.tarifa = new SimpleStringProperty(tarifa);
     }
 
     public String getTiempoEstimado() {
-        return tiempoEstimado;
+        return tiempoEstimado.get();
     }
 
     public void setTiempoEstimado(String tiempoEstimado) {
-        this.tiempoEstimado = tiempoEstimado;
+        this.tiempoEstimado = new SimpleStringProperty(tiempoEstimado);
     }
 
     public String getTipoTiempo() {
-        return tipoTiempo;
+        return tipoTiempo.get();
     }
 
     public void setTipoTiempo(String tipoTiempo) {
-        this.tipoTiempo = tipoTiempo;
+        this.tipoTiempo = new SimpleStringProperty(tipoTiempo);
     }
     
     

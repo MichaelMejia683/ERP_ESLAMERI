@@ -11,6 +11,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import javafx.collections.ObservableList;
 import javax.swing.JOptionPane;
 
 /**
@@ -121,8 +122,7 @@ public class EntradaDAO {
         return rtdo;
     }
     
-    public ArrayList<Entrada> listadoEntrada(String id){      
-        ArrayList<Entrada> listado = new ArrayList<>();
+    public void listadoEntrada(String id,ObservableList<Entrada> listado){      
         try{
             con = conexion.dataSource.getConnection();
             String sql;
@@ -140,18 +140,17 @@ public class EntradaDAO {
             
             rs = pstm.executeQuery();
                         
-            Entrada entrada = null;
             while(rs.next()){
-                entrada = new Entrada();
-                entrada.setIdEntrada(rs.getString("idEntrada"));
-                entrada.setIdOC(rs.getString("idOC"));
-                entrada.setIdUsuario(rs.getString("idUsuario"));
-                entrada.setArticulo(rs.getString("articulo"));
-                entrada.setComentario(rs.getString("comentario"));
-                entrada.setEstado(rs.getString("estado"));
-                entrada.setEntregadoA(rs.getString("entregadoA"));
-                entrada.setEntregadoPor(rs.getString("entregadoPor"));
-                listado.add(entrada);
+                listado.add( new Entrada(
+                rs.getString("idEntrada"),
+                rs.getString("idOC"),
+                rs.getString("idUsuario"),
+                rs.getString("articulo"),
+                rs.getString("comentario"),
+                rs.getString("estado"),
+                rs.getString("entregadoA"),
+                rs.getString("entregadoPor")
+                ));
             }
         }
         catch(SQLException ex){
@@ -168,7 +167,6 @@ public class EntradaDAO {
                         ex.getErrorCode() + "\nError en generar listado de ENTRADA : " + ex.getMessage());
             }
         }
-        return listado;
     }
     
 }

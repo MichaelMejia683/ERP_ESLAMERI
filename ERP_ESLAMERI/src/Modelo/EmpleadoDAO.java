@@ -11,6 +11,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import javafx.collections.ObservableList;
 import javax.swing.JOptionPane;
 
 /**
@@ -34,16 +35,17 @@ public class EmpleadoDAO {
     public int crearEmpleado(Empleado e){
         try{
             con = conexion.dataSource.getConnection();
-            String sql = "INSERT INTO empleado(idArea,idContrato,nombre,fechaNacimiento,cargo,salario,numeroCuentaBanco,fechaVinculacion) VALUES(?,?,?,?,?,?,?,?)";
+            String sql = "INSERT INTO empleado(idEmpleado,idArea,idContrato,nombre,fechaNacimiento,cargo,salario,numeroCuentaBanco,fechaVinculacion) VALUES(?,?,?,?,?,?,?,?,?)";
             pstm = con.prepareStatement(sql);
-            pstm.setInt(1,Integer.parseInt(e.getIdArea()));
-            pstm.setInt(2,Integer.parseInt(e.getIdContrato()));
-            pstm.setString(3, e.getNombre());
-            pstm.setString(4, e.getFechaNacimiento());
-            pstm.setString(5, e.getCargo());
-            pstm.setString(6, e.getSalario());
-            pstm.setString(7, e.getNumeroCuentaBanco());
-            pstm.setString(8, e.getFechaVinculacion());
+            pstm.setInt(1,Integer.parseInt(e.getIdEmpleado()));
+            pstm.setInt(2,Integer.parseInt(e.getIdArea()));
+            pstm.setInt(3,Integer.parseInt(e.getIdContrato()));
+            pstm.setString(4, e.getNombre());
+            pstm.setString(5, e.getFechaNacimiento());
+            pstm.setString(6, e.getCargo());
+            pstm.setString(7, e.getSalario());
+            pstm.setString(8, e.getNumeroCuentaBanco());
+            pstm.setString(9, e.getFechaVinculacion());
             rtdo = pstm.executeUpdate();  
         }
         catch(SQLException ex){
@@ -123,8 +125,7 @@ public class EmpleadoDAO {
         return rtdo;
     }
     
-    public ArrayList<Empleado> listadoEmpleado(String id){      
-        ArrayList<Empleado> listado = new ArrayList<>();
+    public void listadoEmpleado(String id, ObservableList<Empleado> listado){      
         try{
             con = conexion.dataSource.getConnection();
             String sql;
@@ -142,19 +143,18 @@ public class EmpleadoDAO {
             
             rs = pstm.executeQuery();
                         
-            Empleado empleado = null;
             while(rs.next()){
-                empleado = new Empleado();
-                empleado.setIdEmpleado(rs.getString("idEmpleado"));
-                empleado.setIdArea(rs.getString("idArea"));
-                empleado.setIdContrato(rs.getString("idContrato"));
-                empleado.setNombre(rs.getString("nombre"));
-                empleado.setFechaNacimiento(rs.getString("fechaNacimiento"));
-                empleado.setCargo(rs.getString("cargo"));
-                empleado.setSalario(rs.getString("salario"));
-                empleado.setNumeroCuentaBanco(rs.getString("numeroCuentaBanco"));
-                empleado.setFechaVinculacion(rs.getString("fechaVinculacion"));
-                listado.add(empleado);
+                listado.add( new Empleado(
+                rs.getString("idEmpleado"),
+                rs.getString("idArea"),
+                rs.getString("idContrato"),
+                rs.getString("nombre"),
+                rs.getString("fechaNacimiento"),
+                rs.getString("cargo"),
+                rs.getString("salario"),
+                rs.getString("numeroCuentaBanco"),
+                rs.getString("fechaVinculacion")
+                ));
             }
         }
         catch(SQLException ex){
@@ -171,7 +171,6 @@ public class EmpleadoDAO {
                         ex.getErrorCode() + "\nError en generar listado de EMPLEADO : " + ex.getMessage());
             }
         }
-        return listado;
     }
     
 }

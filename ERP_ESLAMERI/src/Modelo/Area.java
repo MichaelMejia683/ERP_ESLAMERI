@@ -6,37 +6,40 @@
  */
 package Modelo;
 
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
+
 /**
  *
  * @author MAICOL MEJIA
  */
 public class Area {
     
-    private String idArea;
-    private String nombre;
+    private StringProperty idArea;
+    private StringProperty nombre;
 
     public Area() {
     }
 
     public Area(String idArea, String nombre) {
-        this.idArea = idArea;
-        this.nombre = nombre;
+        this.idArea = new SimpleStringProperty(idArea);
+        this.nombre = new SimpleStringProperty(nombre);
     }
 
     public String getIdArea() {
-        return idArea;
+        return idArea.get();
     }
 
     public void setIdArea(String idArea) {
-        this.idArea = idArea;
+        this.idArea = new SimpleStringProperty(idArea);
     }
 
     public String getNombre() {
-        return nombre;
+        return nombre.get();
     }
 
     public void setNombre(String nombre) {
-        this.nombre = nombre;
+        this.nombre = new SimpleStringProperty(nombre);
     }
     
     

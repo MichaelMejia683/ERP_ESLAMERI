@@ -11,6 +11,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import javafx.collections.ObservableList;
 import javax.swing.JOptionPane;
 
 /**
@@ -113,8 +114,7 @@ public class NominaDAO {
         return rtdo;
     }
     
-    public ArrayList<Nomina> listadoNomina(String id){      
-        ArrayList<Nomina> listado = new ArrayList<>();
+    public void listadoNomina(String id, ObservableList<Nomina> listado){      
         try{
             con = conexion.dataSource.getConnection();
             String sql;
@@ -132,14 +132,13 @@ public class NominaDAO {
             
             rs = pstm.executeQuery();
                         
-            Nomina empresa = null;
             while(rs.next()){
-                empresa = new Nomina();
-                empresa.setIdNomina(rs.getString("idNomina"));
-                empresa.setIdCuenta(rs.getString("idCuenta"));
-                empresa.setPagoTotal(rs.getString("pagoTotal"));
-                empresa.setFechaPago(rs.getString("fechaPago"));
-                listado.add(empresa);
+                listado.add( new Nomina(
+                rs.getString("idNomina"),
+                rs.getString("idCuenta"),
+                rs.getString("pagoTotal"),
+                rs.getString("fechaPago")
+                ));
             }
         }
         catch(SQLException ex){
@@ -156,7 +155,6 @@ public class NominaDAO {
                         ex.getErrorCode() + "\nError en generar listado de NOMINA : " + ex.getMessage());
             }
         }
-        return listado;
     }
     
 }

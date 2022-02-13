@@ -11,6 +11,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import javafx.collections.ObservableList;
 import javax.swing.JOptionPane;
 
 /**
@@ -111,8 +112,7 @@ public class RolDAO {
         return rtdo;
     }
     
-    public ArrayList<Rol> listadoRol(String id){      
-        ArrayList<Rol> listado = new ArrayList<>();
+    public void listadoRol(String id, ObservableList<Rol> listado){      
         try{
             con = conexion.dataSource.getConnection();
             String sql;
@@ -130,13 +130,12 @@ public class RolDAO {
             
             rs = pstm.executeQuery();
                         
-            Rol Rol = null;
             while(rs.next()){
-                Rol = new Rol();
-                Rol.setIdRol(rs.getString("idRol"));
-                Rol.setNombre(rs.getString("nombre"));
-                Rol.setPermisos(rs.getString("permisos"));
-                listado.add(Rol);
+                listado.add( new Rol(
+                rs.getString("idRol"),
+                rs.getString("nombre"),
+                rs.getString("permisos")
+                ));
             }
         }
         catch(SQLException ex){
@@ -153,7 +152,6 @@ public class RolDAO {
                         ex.getErrorCode() + "\nError en generar listado de ROL : " + ex.getMessage());
             }
         }
-        return listado;
     }
     
 }

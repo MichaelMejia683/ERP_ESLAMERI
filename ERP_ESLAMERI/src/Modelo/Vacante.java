@@ -5,87 +5,90 @@
  */
 package Modelo;
 
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
+
 /**
  *
  * @author MICHAEL
  */
 public class Vacante {
     
-    private String idVacante;
-    private String idUsuario;
-    private String cargo;
-    private String experiencia;
-    private String estadoTiempo;
-    private String descripcionHabilidad;
-    private String estado;
+    private StringProperty idVacante;
+    private StringProperty idUsuario;
+    private StringProperty cargo;
+    private StringProperty experiencia;
+    private StringProperty estadoTiempo;
+    private StringProperty descripcionHabilidad;
+    private StringProperty estado;
 
     public Vacante() {
     }
 
     public Vacante(String idVacante, String idUsuario, String cargo, String experiencia, String estadoTiempo, String descripcionHabilidad, String estado) {
-        this.idVacante = idVacante;
-        this.idUsuario = idUsuario;
-        this.cargo = cargo;
-        this.experiencia = experiencia;
-        this.estadoTiempo = estadoTiempo;
-        this.descripcionHabilidad = descripcionHabilidad;
-        this.estado = estado;
+        this.idVacante = new SimpleStringProperty(idVacante);
+        this.idUsuario = new SimpleStringProperty(idUsuario);
+        this.cargo = new SimpleStringProperty(cargo);
+        this.experiencia = new SimpleStringProperty(experiencia);
+        this.estadoTiempo = new SimpleStringProperty(estadoTiempo);
+        this.descripcionHabilidad = new SimpleStringProperty(descripcionHabilidad);
+        this.estado = new SimpleStringProperty(estado);
     }
 
     public String getIdVacante() {
-        return idVacante;
+        return idVacante.get();
     }
 
     public void setIdVacante(String idVacante) {
-        this.idVacante = idVacante;
+        this.idVacante = new SimpleStringProperty(idVacante);
     }
 
     public String getIdUsuario() {
-        return idUsuario;
+        return idUsuario.get();
     }
 
     public void setIdUsuario(String idUsuario) {
-        this.idUsuario = idUsuario;
+        this.idUsuario = new SimpleStringProperty(idUsuario);
     }
 
     public String getCargo() {
-        return cargo;
+        return cargo.get();
     }
 
     public void setCargo(String cargo) {
-        this.cargo = cargo;
+        this.cargo = new SimpleStringProperty(cargo);
     }
 
     public String getExperiencia() {
-        return experiencia;
+        return experiencia.get();
     }
 
     public void setExperiencia(String experiencia) {
-        this.experiencia = experiencia;
+        this.experiencia = new SimpleStringProperty(experiencia);
     }
 
     public String getEstadoTiempo() {
-        return estadoTiempo;
+        return estadoTiempo.get();
     }
 
     public void setEstadoTiempo(String estadoTiempo) {
-        this.estadoTiempo = estadoTiempo;
+        this.estadoTiempo = new SimpleStringProperty(estadoTiempo);
     }
 
     public String getDescripcionHabilidad() {
-        return descripcionHabilidad;
+        return descripcionHabilidad.get();
     }
 
     public void setDescripcionHabilidad(String descripcionHabilidad) {
-        this.descripcionHabilidad = descripcionHabilidad;
+        this.descripcionHabilidad = new SimpleStringProperty(descripcionHabilidad);
     }
 
     public String getEstado() {
-        return estado;
+        return estado.get();
     }
 
     public void setEstado(String estado) {
-        this.estado = estado;
+        this.estado = new SimpleStringProperty(estado);
     }
     
     

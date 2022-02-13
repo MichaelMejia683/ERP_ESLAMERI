@@ -11,6 +11,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
 import javax.swing.JOptionPane;
 
 /**
@@ -34,11 +36,12 @@ public class ContratoDAO {
     public int crearContrato(Contrato e){
         try{
             con = conexion.dataSource.getConnection();
-            String sql = "INSERT INTO contrato(idEmpresa,tipoContrato,tiempoContrato) VALUES(?,?,?)";
+            String sql = "INSERT INTO contrato(idEmpresa,tipoContrato,tiempoContrato,nombreContrato) VALUES(?,?,?,?)";
             pstm = con.prepareStatement(sql);
             pstm.setInt(1,Integer.parseInt(e.getIdEmpresa()));
             pstm.setString(2, e.getTipoContrato());
             pstm.setString(3, e.getTiempoContrato());
+            pstm.setString(4, e.getNombreContrato());
             rtdo = pstm.executeUpdate();  
         }
         catch(SQLException ex){
@@ -61,13 +64,14 @@ public class ContratoDAO {
         try{
             con = conexion.dataSource.getConnection();
             String sql = "UPDATE contrato " +
-                         "SET idEmpleado = ?, tipoContrato = ?, tiempoContrato = ?"
+                         "SET idEmpresa = ?, tipoContrato = ?, tiempoContrato = ?, nombreContrato = ?"
                     +    " WHERE idContrato = ?";
             pstm = con.prepareStatement(sql);            
             pstm.setInt(1,Integer.parseInt(e.getIdEmpresa()));
             pstm.setString(2, e.getTipoContrato());
             pstm.setString(3, e.getTiempoContrato());
-            pstm.setInt(4,Integer.parseInt(e.getIdContrato()));
+            pstm.setString(4, e.getNombreContrato());
+            pstm.setInt(5,Integer.parseInt(e.getIdContrato()));
             rtdo = pstm.executeUpdate();  
         }
         catch(SQLException ex){
@@ -88,10 +92,10 @@ public class ContratoDAO {
   
         
             
-    public int eliminarCliente(String id){      
+    public int eliminarContrato(String id){      
         try{
             con = conexion.dataSource.getConnection();
-            String sql = "DELETE FROM cliente WHERE idCliente = ? ";
+            String sql = "DELETE FROM contrato WHERE idContrato = ? ";
             pstm = con.prepareStatement(sql);
             pstm.setInt(1, Integer.parseInt(id));
             rtdo = pstm.executeUpdate(); 
@@ -99,7 +103,7 @@ public class ContratoDAO {
         }
         catch(SQLException ex){
             JOptionPane.showMessageDialog(null,"Código : " + 
-                        ex.getErrorCode() + "\nError en eliminar un CLIENTE: "+ex.getMessage());
+                        ex.getErrorCode() + "\nError en eliminar un CONTRATO: "+ex.getMessage());
         } 
         finally{
             try{
@@ -107,22 +111,21 @@ public class ContratoDAO {
             }
             catch(SQLException ex){
                 JOptionPane.showMessageDialog(null,"Código : " + 
-                        ex.getErrorCode() + "\nError en eliminar un CLIENTE : " + ex.getMessage());
+                        ex.getErrorCode() + "\nError en eliminar un CONTRATO : " + ex.getMessage());
             }
         }
         return rtdo;
     }
     
-    public ArrayList<Cliente> listadoCliente(String id){      
-        ArrayList<Cliente> listado = new ArrayList<>();
+    public void listadoContrato(String id,ObservableList<Contrato> listado){
         try{
             con = conexion.dataSource.getConnection();
             String sql;
             if(id.equalsIgnoreCase("0")){
-                sql = "SELECT * FROM cliente ORDER BY idCliente";            
+                sql = "SELECT * FROM contrato ORDER BY idContrato";            
             }else{
-                sql = "SELECT * FROM cliente WHERE idCliente = ? "
-                    + "ORDER BY idCliente";   
+                sql = "SELECT * FROM contrato WHERE idContrato = ? "
+                    + "ORDER BY idContrato";   
             }                        
             pstm=con.prepareStatement(sql);
             
@@ -132,19 +135,19 @@ public class ContratoDAO {
             
             rs = pstm.executeQuery();
                         
-            Cliente cliente = null;
             while(rs.next()){
-                cliente = new Cliente();
-                cliente.setIdCliente(rs.getString("idCliente"));
-                cliente.setNombre(rs.getString("nombre"));
-                cliente.setTelefono(rs.getString("telefono"));
-                cliente.setDireccion(rs.getString("direccion"));
-                listado.add(cliente);
+                listado.add( new Contrato(
+                rs.getString("idcontrato"), 
+                rs.getString("idempresa"),
+                rs.getString("nombrecontrato"),
+                rs.getString("tipocontrato"),
+                rs.getString("tiempocontrato")
+                ));
             }
         }
         catch(SQLException ex){
             JOptionPane.showMessageDialog(null,"Código : " + 
-                        ex.getErrorCode() + "\nError en generar listado de CLIENTE : " + ex.getMessage());
+                        ex.getErrorCode() + "\nError en generar listado de CONTRATO : " + ex.getMessage());
         }
         finally{
             try{
@@ -153,10 +156,56 @@ public class ContratoDAO {
             }
             catch(SQLException ex){
                 JOptionPane.showMessageDialog(null,"Código : " + 
-                        ex.getErrorCode() + "\nError en generar listado de CLIENTE : " + ex.getMessage());
+                        ex.getErrorCode() + "\nError en generar listado de CONTRATO : " + ex.getMessage());
             }
         }
-        return listado;
     }
+
+
+    public void listadoContratoFiltrado(String id,FilteredList<Contrato> listado){
+        try{
+            con = conexion.dataSource.getConnection();
+            String sql;
+            if(id.equalsIgnoreCase("0")){
+                sql = "SELECT * FROM contrato ORDER BY idContrato";            
+            }else{
+                sql = "SELECT * FROM contrato WHERE idContrato = ? "
+                    + "ORDER BY idContrato";   
+            }                        
+            pstm=con.prepareStatement(sql);
+            
+            if(id != "0"){
+                pstm.setInt(1,Integer.parseInt(id));
+            }
+            
+            rs = pstm.executeQuery();
+                        
+            Contrato contrato = null;
+            while(rs.next()){
+                listado.add( new Contrato(
+                rs.getString("idcontrato"), 
+                rs.getString("idempresa"),
+                rs.getString("nombrecontrato"),
+                rs.getString("tipocontrato"),
+                rs.getString("tiempocontrato")
+                ));
+            }
+        }
+        catch(SQLException ex){
+            JOptionPane.showMessageDialog(null,"Código : " + 
+                        ex.getErrorCode() + "\nError en generar listado de CONTRATO : " + ex.getMessage());
+        }
+        finally{
+            try{
+                if(rs!=null) rs.close();
+                if(pstm!=null) pstm.close();                
+            }
+            catch(SQLException ex){
+                JOptionPane.showMessageDialog(null,"Código : " + 
+                        ex.getErrorCode() + "\nError en generar listado de CONTRATO : " + ex.getMessage());
+            }
+        }
+    }
+
     
 }

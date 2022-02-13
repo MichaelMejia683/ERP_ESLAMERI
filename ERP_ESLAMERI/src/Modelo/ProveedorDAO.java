@@ -11,6 +11,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import javafx.collections.ObservableList;
 import javax.swing.JOptionPane;
 
 /**
@@ -115,8 +116,7 @@ public class ProveedorDAO {
         return rtdo;
     }
     
-    public ArrayList<Proveedor> listadoProveedor(String id){      
-        ArrayList<Proveedor> listado = new ArrayList<>();
+    public void listadoProveedor(String id, ObservableList<Proveedor> listado){
         try{
             con = conexion.dataSource.getConnection();
             String sql;
@@ -134,15 +134,14 @@ public class ProveedorDAO {
             
             rs = pstm.executeQuery();
                         
-            Proveedor prov = null;
             while(rs.next()){
-                prov = new Proveedor();
-                prov.setIdProv(rs.getString("idProv"));
-                prov.setNombre(rs.getString("nombre"));
-                prov.setDireccion(rs.getString("direccion"));
-                prov.setTelefono(rs.getString("telefono"));
-                prov.setNIT(rs.getString("NIT"));
-                listado.add(prov);
+                listado.add( new Proveedor(
+                rs.getString("idProv"),
+                rs.getString("nombre"),
+                rs.getString("direccion"),
+                rs.getString("telefono"),
+                rs.getString("NIT")
+                ));
             }
         }
         catch(SQLException ex){
@@ -159,7 +158,6 @@ public class ProveedorDAO {
                         ex.getErrorCode() + "\nError en generar listado de PROVEEDOR : " + ex.getMessage());
             }
         }
-        return listado;
     }
     
 }

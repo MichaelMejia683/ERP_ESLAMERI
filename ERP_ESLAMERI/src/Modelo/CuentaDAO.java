@@ -11,6 +11,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import javafx.collections.ObservableList;
 import javax.swing.JOptionPane;
 
 /**
@@ -62,7 +63,7 @@ public class CuentaDAO {
         try{
             con = conexion.dataSource.getConnection();
             String sql = "UPDATE cuenta " +
-                         "SET idEmpleado = ?, numeroCuenta = ?, banco = ?, saldo = ?"
+                         "SET idEmpresa = ?, numeroCuenta = ?, banco = ?, saldo = ?"
                     +    " WHERE idCuenta = ?";
             pstm = con.prepareStatement(sql);            
             pstm.setInt(1,Integer.parseInt(e.getIdEmpresa()));
@@ -115,8 +116,7 @@ public class CuentaDAO {
         return rtdo;
     }
     
-    public ArrayList<Cuenta> listadoCuenta(String id){      
-        ArrayList<Cuenta> listado = new ArrayList<>();
+    public void listadoCuenta(String id,ObservableList<Cuenta> listado){      
         try{
             con = conexion.dataSource.getConnection();
             String sql;
@@ -134,15 +134,14 @@ public class CuentaDAO {
             
             rs = pstm.executeQuery();
                         
-            Cuenta cuenta = null;
             while(rs.next()){
-                cuenta = new Cuenta();
-                cuenta.setIdCuenta(rs.getString("idCliente"));
-                cuenta.setIdEmpresa(rs.getString("idEmpresa"));
-                cuenta.setNumeroCuenta(rs.getString("numeroCuenta"));
-                cuenta.setBanco(rs.getString("banco"));
-                cuenta.setSaldo(rs.getString("saldo"));
-                listado.add(cuenta);
+                listado.add( new Cuenta(
+                rs.getString("idCuenta"),
+                rs.getString("idEmpresa"),
+                rs.getString("numeroCuenta"),
+                rs.getString("banco"),
+                rs.getString("saldo")
+                ));
             }
         }
         catch(SQLException ex){
@@ -159,7 +158,6 @@ public class CuentaDAO {
                         ex.getErrorCode() + "\nError en generar listado de CUENTA : " + ex.getMessage());
             }
         }
-        return listado;
     }
     
 }

@@ -5,67 +5,70 @@
  */
 package Modelo;
 
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
+
 /**
  *
  * @author MAICOL MEJA
  */
 public class Cuenta {
     
-    private String idCuenta;
-    private String idEmpresa;
-    private String numeroCuenta;
-    private String banco;
-    private String saldo;
+    private StringProperty idCuenta;
+    private StringProperty idEmpresa;
+    private StringProperty numeroCuenta;
+    private StringProperty banco;
+    private StringProperty saldo;
 
     public Cuenta() {
     }
 
     public Cuenta(String idCuenta, String idEmpresa, String numeroCuenta, String banco, String saldo) {
-        this.idCuenta = idCuenta;
-        this.idEmpresa = idEmpresa;
-        this.numeroCuenta = numeroCuenta;
-        this.banco = banco;
-        this.saldo = saldo;
+        this.idCuenta = new SimpleStringProperty(idCuenta);
+        this.idEmpresa = new SimpleStringProperty(idEmpresa);
+        this.numeroCuenta = new SimpleStringProperty(numeroCuenta);
+        this.banco = new SimpleStringProperty(banco);
+        this.saldo = new SimpleStringProperty(saldo);
     }
 
     public String getIdCuenta() {
-        return idCuenta;
+        return idCuenta.get();
     }
 
     public void setIdCuenta(String idCuenta) {
-        this.idCuenta = idCuenta;
+        this.idCuenta = new SimpleStringProperty(idCuenta);
     }
 
     public String getIdEmpresa() {
-        return idEmpresa;
+        return idEmpresa.get();
     }
 
     public void setIdEmpresa(String idEmpresa) {
-        this.idEmpresa = idEmpresa;
+        this.idEmpresa = new SimpleStringProperty(idEmpresa);
     }
 
     public String getNumeroCuenta() {
-        return numeroCuenta;
+        return numeroCuenta.get();
     }
 
     public void setNumeroCuenta(String numeroCuenta) {
-        this.numeroCuenta = numeroCuenta;
+        this.numeroCuenta = new SimpleStringProperty(numeroCuenta);
     }
 
     public String getBanco() {
-        return banco;
+        return banco.get();
     }
 
     public void setBanco(String banco) {
-        this.banco = banco;
+        this.banco = new SimpleStringProperty(banco);
     }
 
     public String getSaldo() {
-        return saldo;
+        return saldo.get();
     }
 
     public void setSaldo(String saldo) {
-        this.saldo = saldo;
+        this.saldo = new SimpleStringProperty(saldo);
     }
     
     

@@ -11,6 +11,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import javafx.collections.ObservableList;
 import javax.swing.JOptionPane;
 
 /**
@@ -115,8 +116,7 @@ public class UsuarioDAO {
         return rtdo;
     }
     
-    public ArrayList<Usuario> listadoUsuario(String id){      
-        ArrayList<Usuario> listado = new ArrayList<>();
+    public void listadoUsuario(String id, ObservableList<Usuario> listado){      
         try{
             con = conexion.dataSource.getConnection();
             String sql;
@@ -134,15 +134,14 @@ public class UsuarioDAO {
             
             rs = pstm.executeQuery();
                         
-            Usuario US = null;
             while(rs.next()){
-                US = new Usuario();
-                US.setIdUsuario(rs.getString("idUsuario"));
-                US.setUsuario(rs.getString("usuario"));
-                US.setIdRol(rs.getString("idRol"));
-                US.setCorreo(rs.getString("correo"));
-                US.setContrasena(rs.getString("contrasena"));
-                listado.add(US);
+                listado.add( new Usuario(
+                rs.getString("idUsuario"),
+                rs.getString("usuario"),
+                rs.getString("idRol"),
+                rs.getString("correo"),
+                rs.getString("contrasena")
+                ));
             }
         }
         catch(SQLException ex){
@@ -159,7 +158,61 @@ public class UsuarioDAO {
                         ex.getErrorCode() + "\nError en generar listado de USUARIO : " + ex.getMessage());
             }
         }
-        return listado;
+    }
+    
+    
+    public ArrayList<Usuario> loginUsuario(String usuario, String password){
+    
+        Connection conectar=null;
+        PreparedStatement pst;
+        ResultSet rs ;
+        Usuario cuenta ;
+        ArrayList list = new ArrayList();
+        
+        try{
+
+            conectar = conexion.dataSource.getConnection();
+            
+            if(conectar != null){           
+                
+                String sql ="SELECT *  FROM usuario WHERE usuario =? "
+                        + "AND contrasena=?";
+                
+                pst = conectar.prepareStatement(sql);
+                pst.setString(1, usuario);
+                pst.setString(2, password);
+                                
+                rs = pst.executeQuery();
+                                
+                if(rs.next()){
+                    
+                    cuenta = new Usuario();
+                    cuenta.setUsuario(rs.getString("usuario"));
+                    cuenta.setContrasena(rs.getString("contrasena"));
+                    cuenta.setIdRol(rs.getString("idRol"));
+                    list.add(cuenta);
+
+                }
+                 
+            }else{
+                JOptionPane.showMessageDialog(null, "Hubo un error al realizar la operación, intente más tarde \no Verifique la base de Datos","Error",JOptionPane.ERROR_MESSAGE);
+            }
+                
+        
+        }catch(SQLException e){
+                JOptionPane.showMessageDialog(null, e , ".::Error En la Operacion::.", JOptionPane.ERROR_MESSAGE);
+        }finally{
+        
+            try{
+                conectar.close();
+            }catch(SQLException ex){
+                System.out.println("Error "+ex);
+            }
+        
+        }
+        
+       return list;
+         
     }
     
 }

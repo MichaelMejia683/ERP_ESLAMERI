@@ -11,6 +11,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import javafx.collections.ObservableList;
 import javax.swing.JOptionPane;
 
 /**
@@ -113,8 +114,7 @@ public class Evaluacion_DesempeñoDAO {
         return rtdo;
     }
     
-    public ArrayList<Evaluacion_Desempeño> listadoEvaluacion_Desempeño(String id){      
-        ArrayList<Evaluacion_Desempeño> listado = new ArrayList<>();
+    public void listadoEvaluacion_Desempeño(String id, ObservableList<Evaluacion_Desempeño> listado){      
         try{
             con = conexion.dataSource.getConnection();
             String sql;
@@ -132,14 +132,13 @@ public class Evaluacion_DesempeñoDAO {
             
             rs = pstm.executeQuery();
                         
-            Evaluacion_Desempeño ED = null;
             while(rs.next()){
-                ED = new Evaluacion_Desempeño();
-                ED.setIdED(rs.getString("idED"));
-                ED.setIdEmpleado(rs.getString("idEmpleado"));
-                ED.setFormulario(rs.getString("formulario"));
-                ED.setIndicadoresGestion(rs.getString("indicadoresGestion"));
-                listado.add(ED);
+                listado.add( new Evaluacion_Desempeño(
+                rs.getString("idED"),
+                rs.getString("idEmpleado"),
+                rs.getString("formulario"),
+                rs.getString("indicadoresGestion")
+                ));
             }
         }
         catch(SQLException ex){
@@ -155,8 +154,7 @@ public class Evaluacion_DesempeñoDAO {
                 JOptionPane.showMessageDialog(null,"Código : " + 
                         ex.getErrorCode() + "\nError en generar listado de EVALUACION DE DESEMPEÑO : " + ex.getMessage());
             }
-        }
-        return listado;
+        } 
     }
     
 }

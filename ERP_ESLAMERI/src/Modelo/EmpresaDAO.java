@@ -11,6 +11,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import javafx.collections.ObservableList;
 import javax.swing.JOptionPane;
 
 /**
@@ -111,8 +112,7 @@ public class EmpresaDAO {
         return rtdo;
     }
     
-    public ArrayList<Empresa> listadoEmpresa(String id){      
-        ArrayList<Empresa> listado = new ArrayList<>();
+    public void listadoEmpresa(String id, ObservableList<Empresa> listado){      
         try{
             con = conexion.dataSource.getConnection();
             String sql;
@@ -130,13 +130,12 @@ public class EmpresaDAO {
             
             rs = pstm.executeQuery();
                         
-            Empresa empresa = null;
             while(rs.next()){
-                empresa = new Empresa();
-                empresa.setIdEmpresa(rs.getString("idEmpresa"));
-                empresa.setNombre(rs.getString("nombre"));
-                empresa.setNIT(rs.getString("NIT"));
-                listado.add(empresa);
+                listado.add( new Empresa(
+                rs.getString("idEmpresa"),
+                rs.getString("nombre"),
+                rs.getString("NIT")
+                ));
             }
         }
         catch(SQLException ex){
@@ -153,7 +152,6 @@ public class EmpresaDAO {
                         ex.getErrorCode() + "\nError en generar listado de EMPRESA : " + ex.getMessage());
             }
         }
-        return listado;
     }
     
 }

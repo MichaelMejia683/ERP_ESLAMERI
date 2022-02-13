@@ -5,57 +5,60 @@
  */
 package Modelo;
 
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
+
 /**
  *
  * @author MAICOL MEJA
  */
 public class Nomina {
     
-    private String idNomina;
-    private String idCuenta;
-    private String pagoTotal;
-    private String fechaPago;
+    private StringProperty idNomina;
+    private StringProperty idCuenta;
+    private StringProperty pagoTotal;
+    private StringProperty fechaPago;
 
     public Nomina() {
     }
 
     public Nomina(String idNomina, String idCuenta, String pagoTotal, String fechaPago) {
-        this.idNomina = idNomina;
-        this.idCuenta = idCuenta;
-        this.pagoTotal = pagoTotal;
-        this.fechaPago = fechaPago;
+        this.idNomina = new SimpleStringProperty(idNomina);
+        this.idCuenta = new SimpleStringProperty(idCuenta);
+        this.pagoTotal = new SimpleStringProperty(pagoTotal);
+        this.fechaPago = new SimpleStringProperty(fechaPago);
     }
 
     public String getIdNomina() {
-        return idNomina;
+        return idNomina.get();
     }
 
     public void setIdNomina(String idNomina) {
-        this.idNomina = idNomina;
+        this.idNomina = new SimpleStringProperty(idNomina);
     }
 
     public String getIdCuenta() {
-        return idCuenta;
+        return idCuenta.get();
     }
 
     public void setIdCuenta(String idCuenta) {
-        this.idCuenta = idCuenta;
+        this.idCuenta = new SimpleStringProperty(idCuenta);
     }
 
     public String getPagoTotal() {
-        return pagoTotal;
+        return pagoTotal.get();
     }
 
     public void setPagoTotal(String pagoTotal) {
-        this.pagoTotal = pagoTotal;
+        this.pagoTotal = new SimpleStringProperty(pagoTotal);
     }
 
     public String getFechaPago() {
-        return fechaPago;
+        return fechaPago.get();
     }
 
     public void setFechaPago(String fechaPago) {
-        this.fechaPago = fechaPago;
+        this.fechaPago = new SimpleStringProperty(fechaPago);
     }
     
     

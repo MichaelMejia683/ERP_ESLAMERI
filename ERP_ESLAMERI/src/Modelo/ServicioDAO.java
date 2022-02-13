@@ -11,6 +11,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import javafx.collections.ObservableList;
 import javax.swing.JOptionPane;
 
 /**
@@ -114,9 +115,8 @@ public class ServicioDAO {
         }
         return rtdo;
     }
-    
-    public ArrayList<Servicio> listadoServicio(String id){      
-        ArrayList<Servicio> listado = new ArrayList<>();
+   
+    public void listadoServicio(String id, ObservableList<Servicio> listado){
         try{
             con = conexion.dataSource.getConnection();
             String sql;
@@ -134,15 +134,14 @@ public class ServicioDAO {
             
             rs = pstm.executeQuery();
                         
-            Servicio servicio = null;
             while(rs.next()){
-                servicio = new Servicio();
-                servicio.setIdServicio(rs.getString("idServicio"));
-                servicio.setNombre(rs.getString("nombre"));
-                servicio.setTarifa(rs.getString("tarifa"));
-                servicio.setTiempoEstimado(rs.getString("tiempoEstimado"));
-                servicio.setTipoTiempo(rs.getString("tipoTiempo"));
-                listado.add(servicio);
+                listado.add( new Servicio(
+                rs.getString("idServicio"),
+                rs.getString("nombre"),
+                rs.getString("tarifa"),
+                rs.getString("tiempoEstimado"),
+                rs.getString("tipoTiempo")
+                ));
             }
         }
         catch(SQLException ex){
@@ -159,7 +158,6 @@ public class ServicioDAO {
                         ex.getErrorCode() + "\nError en generar listado de SERVICIO : " + ex.getMessage());
             }
         }
-        return listado;
     }
     
 }

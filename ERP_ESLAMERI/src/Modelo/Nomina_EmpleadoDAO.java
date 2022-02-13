@@ -11,6 +11,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import javafx.collections.ObservableList;
 import javax.swing.JOptionPane;
 
 /**
@@ -34,16 +35,17 @@ public class Nomina_EmpleadoDAO {
     public int crearNomina_Empleado(Nomina_Empleado e){
         try{
             con = conexion.dataSource.getConnection();
-            String sql = "INSERT INTO nomina_empleado(idEmpleado,cargo,salarioBase,horasExtra,recargos,descuentos,salarioTotal,corte) VALUES(?,?,?,?,?,?,?,?)";
+            String sql = "INSERT INTO nomina_empleado(idEmpleado,salarioBase,horasExtraDiurna,recargos,descuentos,salarioTotal,horaExtraNocturno,horaDominical,corte) VALUES(?,?,?,?,?,?,?,?,?)";
             pstm = con.prepareStatement(sql);
             pstm.setInt(1,Integer.parseInt(e.getIdEmpleado()));
-            pstm.setString(2, e.getCargo());
-            pstm.setString(3, e.getSalarioBase());
-            pstm.setString(4, e.getHorasExtra());
-            pstm.setString(5, e.getRecargos());
-            pstm.setString(6, e.getDescuentos());
-            pstm.setString(7, e.getSalarioTotal());
-            pstm.setString(8, e.getCorte());
+            pstm.setString(2, e.getSalarioBase());
+            pstm.setString(3, e.getHorasExtraDiurna());
+            pstm.setString(4, e.getRecargos());
+            pstm.setString(5, e.getDescuentos());
+            pstm.setString(6, e.getSalarioTotal());
+            pstm.setString(7, e.getHoraExtraNocturno());
+            pstm.setString(8, e.getHoraDominical());
+            pstm.setString(9, e.getCorte());
             rtdo = pstm.executeUpdate();  
         }
         catch(SQLException ex){
@@ -66,18 +68,19 @@ public class Nomina_EmpleadoDAO {
         try{
             con = conexion.dataSource.getConnection();
             String sql = "UPDATE nomina_empleado " +
-                         "SET idEmpleado = ?, cargo = ?, salarioBase = ?, horasExtra = ?, recargos = ?, descuentos = ?, salarioTotal = ?, corte = ?"
+                         "SET idEmpleado = ?, salarioBase = ?, horasExtraDiurna = ?, recargos = ?, descuentos = ?, salarioTotal = ?, horaExtraNocturno = ?, horaDominical = ?, corte = ?"
                     +    " WHERE idNXE = ?";
             pstm = con.prepareStatement(sql);            
             pstm.setInt(1,Integer.parseInt(e.getIdEmpleado()));
-            pstm.setString(2, e.getCargo());
-            pstm.setString(3, e.getSalarioBase());
-            pstm.setString(4, e.getHorasExtra());
-            pstm.setString(5, e.getRecargos());
-            pstm.setString(6, e.getDescuentos());
-            pstm.setString(7, e.getSalarioTotal());
-            pstm.setString(8, e.getCorte());
-            pstm.setInt(9,Integer.parseInt(e.getIdNXE()));
+            pstm.setString(2, e.getSalarioBase());
+            pstm.setString(3, e.getHorasExtraDiurna());
+            pstm.setString(4, e.getRecargos());
+            pstm.setString(5, e.getDescuentos());
+            pstm.setString(6, e.getSalarioTotal());
+            pstm.setString(7, e.getHoraExtraNocturno());
+            pstm.setString(8, e.getHoraDominical());
+            pstm.setString(9, e.getCorte());
+            pstm.setInt(10,Integer.parseInt(e.getIdNXE()));
             rtdo = pstm.executeUpdate();  
         }
         catch(SQLException ex){
@@ -123,8 +126,7 @@ public class Nomina_EmpleadoDAO {
         return rtdo;
     }
     
-    public ArrayList<Nomina_Empleado> listadoNomina_Empleado(String id){      
-        ArrayList<Nomina_Empleado> listado = new ArrayList<>();
+    public void listadoNomina_Empleado(String id, ObservableList<Nomina_Empleado> listado){      
         try{
             con = conexion.dataSource.getConnection();
             String sql;
@@ -142,19 +144,19 @@ public class Nomina_EmpleadoDAO {
             
             rs = pstm.executeQuery();
                         
-            Nomina_Empleado NXE = null;
             while(rs.next()){
-                NXE = new Nomina_Empleado();
-                NXE.setIdNXE(rs.getString("idNXE"));
-                NXE.setIdEmpleado(rs.getString("idEmpleado"));
-                NXE.setCargo(rs.getString("cargo"));
-                NXE.setSalarioBase(rs.getString("salarioBase"));
-                NXE.setHorasExtra(rs.getString("horasExtra"));
-                NXE.setRecargos(rs.getString("recargos"));
-                NXE.setDescuentos(rs.getString("descuentos"));
-                NXE.setSalarioTotal(rs.getString("salarioTotal"));
-                NXE.setCorte(rs.getString("fcorte"));
-                listado.add(NXE);
+                listado.add( new Nomina_Empleado(
+                rs.getString("idNXE"),
+                rs.getString("idEmpleado"),
+                rs.getString("salarioBase"),
+                rs.getString("horasExtraDiurna"),
+                rs.getString("recargos"),
+                rs.getString("descuentos"),
+                rs.getString("salarioTotal"),
+                rs.getString("horaExtraNocturno"),
+                rs.getString("horaDominical"),
+                rs.getString("corte")
+                ));
             }
         }
         catch(SQLException ex){
@@ -171,7 +173,6 @@ public class Nomina_EmpleadoDAO {
                         ex.getErrorCode() + "\nError en generar listado de NXE : " + ex.getMessage());
             }
         }
-        return listado;
     }
     
 }

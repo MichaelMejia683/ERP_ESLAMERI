@@ -11,6 +11,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import javafx.collections.ObservableList;
 import javax.swing.JOptionPane;
 
 /**
@@ -119,8 +120,7 @@ public class Orden_CompraDAO {
         return rtdo;
     }
     
-    public ArrayList<Orden_Compra> listadoOrden_Compra(String id){      
-        ArrayList<Orden_Compra> listado = new ArrayList<>();
+    public void listadoOrden_Compra(String id, ObservableList<Orden_Compra> listado){      
         try{
             con = conexion.dataSource.getConnection();
             String sql;
@@ -138,17 +138,16 @@ public class Orden_CompraDAO {
             
             rs = pstm.executeQuery();
                         
-            Orden_Compra OC = null;
             while(rs.next()){
-                OC = new Orden_Compra();
-                OC.setIdOC(rs.getString("idOC"));
-                OC.setIdProv(rs.getString("idProv"));
-                OC.setArticulo(rs.getString("articulo"));
-                OC.setCantidad(rs.getString("cantidad"));
-                OC.setPrecioUnitario(rs.getString("precioUnitario"));
-                OC.setPrecioTotal(rs.getString("precioTotal"));
-                OC.setTiempoEspera(rs.getString("tiempoEspera"));
-                listado.add(OC);
+                listado.add( new Orden_Compra( 
+                rs.getString("idOC"),
+                rs.getString("idProv"),
+                rs.getString("articulo"),
+                rs.getString("cantidad"),
+                rs.getString("precioUnitario"),
+                rs.getString("precioTotal"),
+                rs.getString("tiempoEspera")
+                ));
             }
         }
         catch(SQLException ex){
@@ -165,7 +164,6 @@ public class Orden_CompraDAO {
                         ex.getErrorCode() + "\nError en generar listado de ORDEN DE COMPRA : " + ex.getMessage());
             }
         }
-        return listado;
     }
     
 }

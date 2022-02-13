@@ -11,6 +11,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import javafx.collections.ObservableList;
 import javax.swing.JOptionPane;
 
 /**
@@ -119,8 +120,7 @@ public class Orden_ServicioDAO {
         return rtdo;
     }
     
-    public ArrayList<Orden_Servicio> listadoOrden_Servicio(String id){      
-        ArrayList<Orden_Servicio> listado = new ArrayList<>();
+    public void listadoOrden_Servicio(String id, ObservableList<Orden_Servicio> listado){      
         try{
             con = conexion.dataSource.getConnection();
             String sql;
@@ -138,17 +138,16 @@ public class Orden_ServicioDAO {
             
             rs = pstm.executeQuery();
                         
-            Orden_Servicio OS = null;
             while(rs.next()){
-                OS = new Orden_Servicio();
-                OS.setIdOS(rs.getString("idOS"));
-                OS.setIdEmpleado(rs.getString("idEmpleado"));
-                OS.setIdServicio(rs.getString("idServicio"));
-                OS.setIdCliente(rs.getString("idCliente"));
-                OS.setEstado(rs.getString("estado"));
-                OS.setTarifa(rs.getString("tarifa"));
-                OS.setComentario(rs.getString("comentario"));
-                listado.add(OS);
+                listado.add( new Orden_Servicio(
+                rs.getString("idOS"),
+                rs.getString("idEmpleado"),
+                rs.getString("idServicio"),
+                rs.getString("idCliente"),
+                rs.getString("estado"),
+                rs.getString("tarifa"),
+                rs.getString("comentario")
+                ));
             }
         }
         catch(SQLException ex){
@@ -165,7 +164,6 @@ public class Orden_ServicioDAO {
                         ex.getErrorCode() + "\nError en generar listado de ORDEN DE SERVICIO : " + ex.getMessage());
             }
         }
-        return listado;
     }
     
 }

@@ -11,6 +11,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import javafx.collections.ObservableList;
 import javax.swing.JOptionPane;
 
 /**
@@ -113,8 +114,7 @@ public class Recibo_PagoDAO {
         return rtdo;
     }
     
-    public ArrayList<Recibo_Pago> listadoRecibo_Pago(String id){      
-        ArrayList<Recibo_Pago> listado = new ArrayList<>();
+    public void listadoRecibo_Pago(String id, ObservableList<Recibo_Pago> listado){      
         try{
             con = conexion.dataSource.getConnection();
             String sql;
@@ -132,14 +132,13 @@ public class Recibo_PagoDAO {
             
             rs = pstm.executeQuery();
                         
-            Recibo_Pago RP = null;
             while(rs.next()){
-                RP = new Recibo_Pago();
-                RP.setIdPago(rs.getString("idPago"));
-                RP.setIdFP(rs.getString("idFP"));
-                RP.setIdCuenta(rs.getString("idCuenta"));
-                RP.setValorPagado(rs.getString("valorPagado"));
-                listado.add(RP);
+                listado.add( new Recibo_Pago(
+                rs.getString("idPago"),
+                rs.getString("idFP"),
+                rs.getString("idCuenta"),
+                rs.getString("valorPagado")
+                ));
             }
         }
         catch(SQLException ex){
@@ -156,7 +155,6 @@ public class Recibo_PagoDAO {
                         ex.getErrorCode() + "\nError en generar listado de RECIBO DE PAGO : " + ex.getMessage());
             }
         }
-        return listado;
     }
     
 }

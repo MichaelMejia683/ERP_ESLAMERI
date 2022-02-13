@@ -5,87 +5,90 @@
  */
 package Modelo;
 
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
+
 /**
  *
  * @author MAICOL MEJA
  */
 public class Orden_Servicio {
     
-    private String idOS;
-    private String idEmpleado;
-    private String idServicio;
-    private String idCliente;
-    private String estado;
-    private String tarifa;
-    private String comentario;
+    private StringProperty idOS;
+    private StringProperty idEmpleado;
+    private StringProperty idServicio;
+    private StringProperty idCliente;
+    private StringProperty estado;
+    private StringProperty tarifa;
+    private StringProperty comentario;
 
     public Orden_Servicio() {
     }
 
     public Orden_Servicio(String idOS, String idEmpleado, String idServicio, String idCliente, String estado, String tarifa, String comentario) {
-        this.idOS = idOS;
-        this.idEmpleado = idEmpleado;
-        this.idServicio = idServicio;
-        this.idCliente = idCliente;
-        this.estado = estado;
-        this.tarifa = tarifa;
-        this.comentario = comentario;
+        this.idOS = new SimpleStringProperty(idOS);
+        this.idEmpleado = new SimpleStringProperty(idEmpleado);
+        this.idServicio = new SimpleStringProperty(idServicio);
+        this.idCliente = new SimpleStringProperty(idCliente);
+        this.estado = new SimpleStringProperty(estado);
+        this.tarifa = new SimpleStringProperty(tarifa);
+        this.comentario = new SimpleStringProperty(comentario);
     }
 
     public String getIdOS() {
-        return idOS;
+        return idOS.get();
     }
 
     public void setIdOS(String idOS) {
-        this.idOS = idOS;
+        this.idOS = new SimpleStringProperty(idOS);
     }
 
     public String getIdEmpleado() {
-        return idEmpleado;
+        return idEmpleado.get();
     }
 
     public void setIdEmpleado(String idEmpleado) {
-        this.idEmpleado = idEmpleado;
+        this.idEmpleado = new SimpleStringProperty(idEmpleado);
     }
 
     public String getIdServicio() {
-        return idServicio;
+        return idServicio.get();
     }
 
     public void setIdServicio(String idServicio) {
-        this.idServicio = idServicio;
+        this.idServicio = new SimpleStringProperty(idServicio);
     }
 
     public String getIdCliente() {
-        return idCliente;
+        return idCliente.get();
     }
 
     public void setIdCliente(String idCliente) {
-        this.idCliente = idCliente;
+        this.idCliente = new SimpleStringProperty(idCliente);
     }
 
     public String getEstado() {
-        return estado;
+        return estado.get();
     }
 
     public void setEstado(String estado) {
-        this.estado = estado;
+        this.estado = new SimpleStringProperty(estado);
     }
 
     public String getTarifa() {
-        return tarifa;
+        return tarifa.get();
     }
 
     public void setTarifa(String tarifa) {
-        this.tarifa = tarifa;
+        this.tarifa = new SimpleStringProperty(tarifa);
     }
 
     public String getComentario() {
-        return comentario;
+        return comentario.get();
     }
 
     public void setComentario(String comentario) {
-        this.comentario = comentario;
+        this.comentario = new SimpleStringProperty(comentario);
     }
     
     

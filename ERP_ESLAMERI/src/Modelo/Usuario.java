@@ -5,67 +5,70 @@
  */
 package Modelo;
 
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
+
 /**
  *
  * @author MICHAEL
  */
 public class Usuario {
     
-    private String idUsuario;
-    private String usuario;
-    private String idRol;
-    private String correo;
-    private String contrasena;
+    private StringProperty idUsuario;
+    private StringProperty usuario;
+    private StringProperty idRol;
+    private StringProperty correo;
+    private StringProperty contrasena;
 
     public Usuario() {
     }
 
     public Usuario(String idUsuario, String usuario, String idRol, String correo, String contrasena) {
-        this.idUsuario = idUsuario;
-        this.usuario = usuario;
-        this.idRol = idRol;
-        this.correo = correo;
-        this.contrasena = contrasena;
+        this.idUsuario = new SimpleStringProperty(idUsuario);
+        this.usuario = new SimpleStringProperty(usuario);
+        this.idRol = new SimpleStringProperty(idRol);
+        this.correo = new SimpleStringProperty(correo);
+        this.contrasena = new SimpleStringProperty(contrasena);
     }
 
     public String getIdUsuario() {
-        return idUsuario;
+        return idUsuario.get();
     }
 
     public void setIdUsuario(String idUsuario) {
-        this.idUsuario = idUsuario;
+        this.idUsuario = new SimpleStringProperty(idUsuario);
     }
 
     public String getUsuario() {
-        return usuario;
+        return usuario.get();
     }
 
     public void setUsuario(String usuario) {
-        this.usuario = usuario;
+        this.usuario = new SimpleStringProperty(usuario);
     }
 
     public String getIdRol() {
-        return idRol;
+        return idRol.get();
     }
 
     public void setIdRol(String idRol) {
-        this.idRol = idRol;
+        this.idRol = new SimpleStringProperty(idRol);
     }
 
     public String getCorreo() {
-        return correo;
+        return correo.get();
     }
 
     public void setCorreo(String correo) {
-        this.correo = correo;
+        this.correo = new SimpleStringProperty(correo);
     }
 
     public String getContrasena() {
-        return contrasena;
+        return contrasena.get();
     }
 
     public void setContrasena(String contrasena) {
-        this.contrasena = contrasena;
+        this.contrasena = new SimpleStringProperty(contrasena);
     }
     
     

@@ -11,6 +11,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import javafx.collections.ObservableList;
 import javax.swing.JOptionPane;
 
 /**
@@ -111,8 +112,7 @@ public class DevolucionDAO {
         return rtdo;
     }
     
-    public ArrayList<Devolucion> listadoDevolucion(String id){      
-        ArrayList<Devolucion> listado = new ArrayList<>();
+    public void listadoDevolucion(String id,ObservableList<Devolucion> listado){
         try{
             con = conexion.dataSource.getConnection();
             String sql;
@@ -130,13 +130,12 @@ public class DevolucionDAO {
             
             rs = pstm.executeQuery();
                         
-            Devolucion devolucion = null;
             while(rs.next()){
-                devolucion = new Devolucion();
-                devolucion.setIdDevolucion(rs.getString("idDevolucion"));
-                devolucion.setIdEntrada(rs.getString("idEntreda"));
-                devolucion.setComentario(rs.getString("comentario"));
-                listado.add(devolucion);
+                listado.add( new Devolucion(
+                rs.getString("idDevolucion"),
+                rs.getString("idEntreda"),
+                 rs.getString("comentario")
+                ));
             }
         }
         catch(SQLException ex){
@@ -153,7 +152,6 @@ public class DevolucionDAO {
                         ex.getErrorCode() + "\nError en generar listado de DEVOLUCION : " + ex.getMessage());
             }
         }
-        return listado;
     }
     
 }

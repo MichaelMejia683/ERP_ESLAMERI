@@ -5,57 +5,60 @@
  */
 package Modelo;
 
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
+
 /**
  *
  * @author MICHAEL
  */
 public class Recibo_Pago {
     
-    private String idPago;
-    private String idFP;
-    private String idCuenta;
-    private String valorPagado;
+    private StringProperty idPago;
+    private StringProperty idFP;
+    private StringProperty idCuenta;
+    private StringProperty valorPagado;
 
     public Recibo_Pago() {
     }
 
     public Recibo_Pago(String idPago, String idFP, String idCuenta, String valorPagado) {
-        this.idPago = idPago;
-        this.idFP = idFP;
-        this.idCuenta = idCuenta;
-        this.valorPagado = valorPagado;
+        this.idPago = new SimpleStringProperty(idPago);
+        this.idFP = new SimpleStringProperty(idFP);
+        this.idCuenta = new SimpleStringProperty(idCuenta);
+        this.valorPagado = new SimpleStringProperty(valorPagado);
     }
 
     public String getIdPago() {
-        return idPago;
+        return idPago.get();
     }
 
     public void setIdPago(String idPago) {
-        this.idPago = idPago;
+        this.idPago = new SimpleStringProperty(idPago);
     }
 
     public String getIdFP() {
-        return idFP;
+        return idFP.get();
     }
 
     public void setIdFP(String idFP) {
-        this.idFP = idFP;
+        this.idFP = new SimpleStringProperty(idFP);
     }
 
     public String getIdCuenta() {
-        return idCuenta;
+        return idCuenta.get();
     }
 
     public void setIdCuenta(String idCuenta) {
-        this.idCuenta = idCuenta;
+        this.idCuenta = new SimpleStringProperty(idCuenta);
     }
 
     public String getValorPagado() {
-        return valorPagado;
+        return valorPagado.get();
     }
 
     public void setValorPagado(String valorPagado) {
-        this.valorPagado = valorPagado;
+        this.valorPagado = new SimpleStringProperty(valorPagado);
     }
     
     

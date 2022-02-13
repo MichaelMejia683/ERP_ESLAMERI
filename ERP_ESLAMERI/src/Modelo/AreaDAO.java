@@ -12,6 +12,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import javafx.collections.ObservableList;
 import javax.swing.JOptionPane;
 
 /**
@@ -110,8 +111,7 @@ public class AreaDAO {
         return rtdo;
     }
     
-    public ArrayList<Area> listadoArea(String id){      
-        ArrayList<Area> listado = new ArrayList<>();
+    public void listadoArea(String id,ObservableList<Area> listado){      
         try{
             con = conexion.dataSource.getConnection();
             String sql;
@@ -129,12 +129,11 @@ public class AreaDAO {
             
             rs = pstm.executeQuery();
                         
-            Area area = null;
             while(rs.next()){
-                area = new Area();
-                area.setIdArea(rs.getString("idArea"));
-                area.setNombre(rs.getString("nombre"));
-                listado.add(area);
+                listado.add( new Area(
+                rs.getString("idArea"),
+                rs.getString("nombre")
+                ));
             }
         }
         catch(SQLException ex){
@@ -151,7 +150,6 @@ public class AreaDAO {
                         ex.getErrorCode() + "\nError en generar listado de AREA: " + ex.getMessage());
             }
         }
-        return listado;
     }
     
 }

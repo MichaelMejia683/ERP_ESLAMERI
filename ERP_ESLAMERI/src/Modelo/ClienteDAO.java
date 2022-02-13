@@ -11,6 +11,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import javafx.collections.ObservableList;
 import javax.swing.JOptionPane;
 
 /**
@@ -113,8 +114,7 @@ public class ClienteDAO {
         return rtdo;
     }
     
-    public ArrayList<Cliente> listadoCliente(String id){      
-        ArrayList<Cliente> listado = new ArrayList<>();
+    public void listadoCliente(String id,ObservableList<Cliente> listado){
         try{
             con = conexion.dataSource.getConnection();
             String sql;
@@ -132,14 +132,13 @@ public class ClienteDAO {
             
             rs = pstm.executeQuery();
                         
-            Cliente cliente = null;
             while(rs.next()){
-                cliente = new Cliente();
-                cliente.setIdCliente(rs.getString("idCliente"));
-                cliente.setNombre(rs.getString("nombre"));
-                cliente.setTelefono(rs.getString("telefono"));
-                cliente.setDireccion(rs.getString("direccion"));
-                listado.add(cliente);
+                listado.add( new Cliente(
+                rs.getString("idCliente"),
+                rs.getString("nombre"),
+                rs.getString("telefono"),
+                rs.getString("direccion")
+                ));
             }
         }
         catch(SQLException ex){
@@ -156,7 +155,6 @@ public class ClienteDAO {
                         ex.getErrorCode() + "\nError en generar listado de CLIENTE : " + ex.getMessage());
             }
         }
-        return listado;
     }
     
 }
